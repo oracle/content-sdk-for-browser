@@ -1,0 +1,34 @@
+{
+	"id": "CORE4A7F873DA4BB4AD58A35A30BA8CBA814",
+	"type": "Starter-Blog-Author",
+	"name": "Jane Doe I",
+	"description": null,
+	"slug": "1481786063047-jane-doe-i",
+	"language": "en-US",
+	"translatable": true,
+	"createdBy": "swebcli.SitesAdmin1.admin",
+	"createdDate": {
+		"value": "2018-06-14T19:34:36.011Z",
+		"timezone": "UTC"
+	},
+	"updatedBy": "swebcli.SitesAdmin1.admin",
+	"updatedDate": {
+		"value": "2018-06-14T19:34:38.911Z",
+		"timezone": "UTC"
+	},
+	"fields": {
+		"starter-blog-author_bio": "<!---mde-->\n\r##### Contenta Iuppiter implet et lingua ab crimina\n Qui pervenit causa; meo at osse in ut insanis septem, dedit summa dixit. Conata ortae ecce **aethere corpus**?\n- Mox ictus si verbis instrumenta insonat infelix\n- Cum sol cur solverat haec\n- Fundamina admovitque specie\n- Successor nitet pendentia scitis",
+		"starter-blog-author_name": "Jane Doe I",
+		"starter-blog-author_avatar": {
+			"id": "CONTBD374CE114CB440CB8BDAE38DE336FC1",
+			"type": "DigitalAsset"
+		}
+	},
+	"links": null,
+	"repositoryId": "F00DA046772BE923F36ECDC94C7932071C5626E0566F",
+	"externalFile": {
+		"folderId": "FC0B2BA3C22F11B798328BA95A6D6A080EBEE58D0468",
+		"fileId": "D8FD68790CA5996AA2FDC5B934F7120972F5B2EED140",
+		"version": "1"
+	}
+}

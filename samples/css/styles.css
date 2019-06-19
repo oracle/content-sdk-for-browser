@@ -1,0 +1,309 @@
+/**
+ * Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+ */
+table,
+th,
+td {
+    border-collapse: collapse;
+    border: 1px solid lightgray;
+}
+
+body {
+    font-family: "Helvetica Neue", "Segoe UI", sans-serif-regular, Helvetica, Arial, sans-serif;
+    /*!important;*/
+    margin: 0px;
+    background: #ededed;
+}
+
+.banner {
+    font-size: 28px;
+    font-weight: 100;
+    /*background-color: #343140;*/
+    background-color: rgb(2, 123, 199);
+    /*line-height: 4.625rem;*/
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    /*margin-bottom: 50px;*/
+    height: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.banner .brand {
+    display: flex;
+    overflow: hidden;
+}
+
+.banner img {
+    margin-right: 10px;
+    width: 72px;
+    height: 72px;
+}
+
+.banner img:hover {
+    cursor: pointer;
+}
+
+.banner .brand {
+    display: flex;
+    overflow: hidden;
+}
+.banner .brand a {
+	text-decoration: none;
+	color: white;
+}
+
+.banner img:hover {
+    cursor: pointer;
+}
+
+.branding {
+    background-color: #ededed;
+    display: inline-block;
+    width: 100%;
+    height: 45px;
+    margin: 0 auto;
+    min-width: 320px;
+    position: relative
+}
+
+.brand {
+    bottom: 12px;
+    margin-left: 0px;
+    margin-top: 10px;
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%
+}
+
+.branding .brand a {
+    color: #252525;
+    text-decoration: none;
+}
+
+
+.brand-logo {
+    max-height: 22px;
+    max-width: 160px;
+    margin: 6px 1px 0px 16px;
+    vertical-align: baseline
+}
+
+.breadcrumb {
+    font-family: "Helvetica Neue", "Segoe UI", sans-serif-regular, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin: 0px 50px 0px 50px;
+    line-height: 44px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.breadcrumb a {
+    color: rgb(20, 95, 171);
+    text-decoration: none;
+}
+
+.filter {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    font-size: 14px;
+    background:rgb(249, 249, 249);
+}
+
+.filter select {
+    background: white;
+    width: 180px;
+    padding: 5px;
+    font-size: 14px;
+    /*line-height: 1;*/
+    border: 1px;
+    border-style:solid;
+    border-color: lightgray;
+    border-radius: 0;
+    /*height: 34px;*/
+    margin-right: 10px;
+}
+
+.docs {
+	margin-top: 30px;
+	margin-left: 30px;
+	font-size: 18px;
+}
+.docs a {
+	text-decoration: none;
+}
+.docs h2 {
+	font-size: 22px;
+}
+.samples {
+	margin-top: 30px;
+	margin-left: 30px;
+	margin-bottom: 30px;
+	font-size: 18px;
+}
+.samples ul {
+	list-style-type: none;
+}
+.samples li {
+	list-style-type: disc;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+.samples a {
+	text-decoration: none;
+}
+
+.apicode {
+	margin: auto;
+	width: 90%;
+	padding: 10px;
+}
+.apicode textarea {
+	font-family: Courier New, Courier, monospace;
+	font-size: 16px;
+	border: none;
+	resize: none;
+	width: 100%;
+	text-align: left;
+	padding: 0px !important; 
+	margin: 0px !important; 
+}
+
+.contentItems {
+	margin-top: 30px;
+	margin-left: 30px;
+	font-size: 18px;
+}
+
+.contentItems ul {
+	list-style-type: none;
+	margin-bottom: 20px;
+}
+.contentItems li {
+	list-style-type: none;
+	margin-left: 20px;
+}
+
+.Starter-Blog-Post img {
+	width: 100%;
+	max-width: 190px;
+	margin:0px;
+	border-radius: 3px;
+}
+
+.post-title {
+	font-size: 24px;
+	color: #333;
+	font-weight:300;
+	margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.post-title a {
+	text-decoration: none;
+	color: #333;
+}
+
+.post-bottom {
+	display: flex;
+	flex-direction: row;
+}
+
+.post-image {
+	width: 200px;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.post-header {
+	margin-bottom: 50px;
+    background: no-repeat center center;
+    background-color: black;
+    background-attachment: scroll;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.post-header .overlay {
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+	background-color: #212529;
+	color: #212529;
+    opacity: 0.5;
+}
+.post-header .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+.post-header .row .col {
+	margin: auto;
+	width: 60%;
+}
+
+.post-heading {
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: white;
+}
+.post-heading h1 {
+	font-size: 50px;
+	font-weight: 400;
+}
+.post-heading h2 {
+	font-size: 26px;
+	font-weight: 300;
+    margin: 10px 0 30px;
+}
+.post-heading .metadata {
+	font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.post-body {
+	display: flex;
+}
+.post-content {
+	flex: 70%;
+    border-right: 1px solid lightgray;
+    padding-right: 10px;
+	padding-left: 10px;
+	font-size: 20px;
+    color: #212529;
+	font-family: 'Lora', 'Times New Roman', serif;
+}
+
+.post-content span {
+	background-color: transparent !important;
+}
+.post-author {
+	flex: 30%;
+	padding-left: 10px;
+	font-size: 16px;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.post-author * {
+	margin-top: 10px;
+}
+
+.type-name a {
+	text-decoration: none;
+	color: #333;
+}
+
+.type-row {
+	column-count: 3;
+}
+.type-row-header {
+	font-weight: bold;
+}

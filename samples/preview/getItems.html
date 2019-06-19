@@ -1,0 +1,112 @@
+<!--
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<script type="text/javascript" src="../../libs/jquery.min.js"></script>
+	<script type="text/javascript" src="../../libs/require.js"></script>
+
+	<link href="../css/styles.css" rel="stylesheet">
+
+	<script id="contentTemplate" type="text/html">
+		<!-- iterate over the items and display the name and description -->
+        <div class="contentItems">
+            {{#blogs}}
+			<ul class="Starter-Blog-Post">
+				<div class="post-title"><a href="{{itemUrl}}">{{starter-blog-post_title}}</a></div>
+				<div class="post-bottom">
+					{{#starter-blog-post_header_image}}
+					<div class="post-image"><img src="{{url}}" /></div>
+					{{/starter-blog-post_header_image}}
+					<div class="post-summary">{{starter-blog-post_summary}}</div>
+				<div>
+			</ul>
+			{{/blogs}}
+        </div>
+    </script>
+</head>
+
+<body>
+	<div class="branding">
+		<div class="brand">
+			<div class="nav">
+				<!-- <button type="button" id="nav-btn" class="menu secondary short osn-clickable" aria-label="Navigation menu" title="Navigation menu"> <span class="icon"></span> </button> -->
+			</div><a href="/"><img id="logo" class="brand-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAAARCAMAAAAxDRTrAAAApVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABU/knhAAAANnRSTlMAzCJq/RDdtKWH+ebvBp9xUdGYd2YbA/JZPjct4djISyUT9urCvZKDMY1DCwKqfl5GGLhjHa4JOWDOAAACmElEQVRIx4WV2XqCMBBGg+JSkEWoiCLiDnW3y//+j9YBIkmT+nFuJBMNZ5LJyEqc2F0aDfvAj6qwb8gsf+Izk7huF748PmfB3hD4LDeMLtNY5QPpXQGb5Ncj42QLKKQzRnShsHyIBX0Am5UYF2PIjB02BN5UjZ5rQcIqWDc8PHU9ExpW/J8IjKhZ0QaxZ00yFmTMOftPZJLiDx/0Ei/0eGrkMXqbrTqc1fGwIZN5JbLvNMw/TOCLcQ7AlMY3PkzKnwT3ZpFv9p+IYwDYxUmzpkNuoTerJk82MJ4o59in2LkUGcjhg9iCOUl0XWC7rsc7wE6U9HWREDA99oIuMJqowcQCMk1kBvTrp8gAluf1CAj4THkYbSKRXR7GKz6BXI+6gKuJZEDKywowiyoJc8b36oe1ipDupvdShCznetQHDFXE2QPD6ul7Chz4xqQOPdDMrV3kHbD6f/iMxKwJfOsic2BRixTvnOsYQF1XP4Dde5ZKSJ80dWwXCaFgyj/aAokukgHjWsS5QOA2LSRmFQGw6VS1GreK6O3AlWdpDU8X+QAu/GjOB3Cs/FzdswXwyb+33tJz5eO2i9yB6aMn4Sj7ZWsVNJkCt6ZGQhMw3fx90khuVoNRjVXtjk+Wq1aR01QkrbOm2cFJiS2BhSOK9WbR+HmABWldqwvOoUSiVGlGughPwcrkgHZyabwWgcfXAjB9JkTYnWxHVFnSTXmDIGB3k3y6kxaRXrlwUEQvTALoUM6yCCtswPp6eh+VRKiZeXohDqHQPyVbyKhV4U2hsOXvFH2kk4ISrKtnyGSicfVf69uQod7vQuFOHWgHCe2uPfKlWMa0dyF5ChFRN7iUl3n0YH+Y1c3k5O1sE5yyvyV9yHD/7NLfgCP3y1/ilaUbUwNDfAAAAABJRU5ErkJggg=="
+				 alt="undefined logo"><span id="brandText">Content and Experience Cloud</span></a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="banner">
+		<div class="brand">
+			<div id="title" class="text-ellip"><a href="../preview.html">Content SDK - Preview Client </a>- getItems</div>
+		</div>
+	</div>
+
+	<div class="apicode">
+		<textarea rows="8" readonly>
+			var ids = ['CORE195955C2A63C419FBEB1E1793C389610', 
+			'CORE6E10572BC43649B4B0AC4BD82AF3F90A'];
+			contentClient.getItems({
+				'ids': ids
+			}).then(function (result) {
+				// process result
+			});
+		</textarea>
+	</div>
+
+	<div id="contentItems"></div>
+
+	<script type="text/javascript">
+		/* global  console */
+		require(['../sdk/content.min', '../libs/mustache.min'], function (contentSDK, Mustache) {
+			// create the content client
+			var contentClient = contentSDK.createPreviewClient({
+				'contentServer': 'http://localhost:7070',
+				'contentVersion': 'v1.1'
+			});
+
+			var ids = ['CORE195955C2A63C419FBEB1E1793C389610', 'CORE6E10572BC43649B4B0AC4BD82AF3F90A'];
+			// retrieve the items
+			contentClient.getItems({
+				'ids': ids
+			}).then(function (result) {
+				var items = result && result.items;
+				var blogs = [];
+				if (items) {
+					Object.keys(items).forEach(function (key) {
+						var item = items[key];
+						var data = item.fields;
+						// create the rendition URL 
+						if (data['starter-blog-post_header_image']) {
+							data['starter-blog-post_header_image']['url'] = contentClient.getRenditionURL({
+								'id': data['starter-blog-post_header_image'].id
+							});
+						}
+						data['id'] = item.id;
+						data['itemUrl'] = './getItem.html?id=' + item.id;
+						blogs.push(data);
+					});
+				}
+
+				// get the Mustache template from the HTML
+				var template = $('#contentTemplate').html();
+
+				// generate the HTML passing in the blogs object so that it will 
+				// iterate across the included "blogs" array referenced in the template
+				var expandedHTML = Mustache.render(template, {
+					blogs: blogs
+				});
+
+				// insert the HTML into the page
+				$('#contentItems').html(expandedHTML);
+			});
+		});
+	</script>
+</body>
+
+</html>

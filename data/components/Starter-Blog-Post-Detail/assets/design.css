@@ -1,0 +1,129 @@
+/**
+ * Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+ */
+ .contentItems {
+	margin-top: 30px;
+	margin-left: 30px;
+	font-size: 18px;
+}
+
+.contentItems ul {
+	list-style-type: none;
+	margin-bottom: 20px;
+}
+.contentItems li {
+	list-style-type: none;
+	margin-left: 20px;
+}
+
+.Starter-Blog-Post img {
+	width: 100%;
+	max-width: 190px;
+	margin:0px;
+	border-radius: 3px;
+}
+
+.post-title {
+	font-size: 24px;
+	color: #333;
+	font-weight:300;
+	margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.post-title a {
+	text-decoration: none;
+	color: #333;
+}
+
+.post-bottom {
+	display: flex;
+	flex-direction: row;
+}
+
+.post-image {
+	width: 200px;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.post-header {
+	margin-bottom: 50px;
+    background: no-repeat center center;
+    background-color: black;
+    background-attachment: scroll;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.post-header .overlay {
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+	background-color: #212529;
+	color: #212529;
+    opacity: 0.5;
+}
+.post-header .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+.post-header .row .col {
+	margin: auto;
+	width: 60%;
+}
+
+.post-heading {
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: white;
+}
+.post-heading h1 {
+	font-size: 50px;
+	font-weight: 400;
+}
+.post-heading h2 {
+	font-size: 26px;
+	font-weight: 300;
+    margin: 10px 0 30px;
+}
+.post-heading .metadata {
+	font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.post-body {
+	display: flex;
+}
+.post-content {
+	flex: 70%;
+    border-right: 1px solid lightgray;
+    padding-right: 10px;
+	padding-left: 10px;
+	font-size: 20px;
+    color: #212529;
+	font-family: 'Lora', 'Times New Roman', serif;
+}
+
+.post-content span {
+	background-color: transparent !important;
+}
+.post-author {
+	flex: 30%;
+	padding-left: 10px;
+	font-size: 16px;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.post-author * {
+	margin-top: 10px;
+}
+
+
+.Starter-Blog-Post p {
+	margin:0px;
+}

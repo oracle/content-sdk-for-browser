@@ -1,0 +1,181 @@
+<!--
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<script type="text/javascript" src="../../libs/jquery.min.js"></script>
+	<script type="text/javascript" src="../../libs/require.js"></script>
+
+	<link href="../css/styles.css" rel="stylesheet">
+
+	<script id="contentTemplate" type="text/html">
+		<!-- iterate over the items and display the name and description -->
+		<div class="contentItem">
+			{{#fields}}
+			<div class="Starter-Blog-Post">
+				{{#starter-blog-post_header_image}}
+				<div class="post-header" style="background-image: url('{{url}}')">
+					<div class="overlay"></div>
+					{{/starter-blog-post_header_image}}
+					<div class="row">
+						<div class="col">
+							<div class="post-heading">
+								<h1>{{starter-blog-post_title}}</h1>
+								<h2>{{starter-blog-post_summary}}</h2>
+								<span class="metadata">{{metadata}}</span>
+							</div>
+						</div>
+					</div>
+					{{#starter-blog-post_header_image}}
+				</div>
+				{{/starter-blog-post_header_image}}
+				<div class="post-body">
+					<div class="post-content">{{{starter-blog-post_content}}}</div>
+					{{#starter-blog-post_author}}
+					<div class="post-author">
+						{{#avatarUrl}}
+						<img src="{{avatarUrl}}" />
+						{{/avatarUrl}}
+						<div>{{name}}</div>
+						<div>{{{bio}}}</div>
+					</div>
+					{{/starter-blog-post_author}}
+				</div>
+			</div>
+			{{/fields}}
+		</div>
+	</script>
+</head>
+
+<body>
+	<div class="branding">
+		<div class="brand">
+			<div class="nav">
+				<!-- <button type="button" id="nav-btn" class="menu secondary short osn-clickable" aria-label="Navigation menu" title="Navigation menu"> <span class="icon"></span> </button> -->
+			</div><a href="/"><img id="logo" class="brand-logo"
+					src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAAARCAMAAAAxDRTrAAAApVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABU/knhAAAANnRSTlMAzCJq/RDdtKWH+ebvBp9xUdGYd2YbA/JZPjct4djISyUT9urCvZKDMY1DCwKqfl5GGLhjHa4JOWDOAAACmElEQVRIx4WV2XqCMBBGg+JSkEWoiCLiDnW3y//+j9YBIkmT+nFuJBMNZ5LJyEqc2F0aDfvAj6qwb8gsf+Izk7huF748PmfB3hD4LDeMLtNY5QPpXQGb5Ncj42QLKKQzRnShsHyIBX0Am5UYF2PIjB02BN5UjZ5rQcIqWDc8PHU9ExpW/J8IjKhZ0QaxZ00yFmTMOftPZJLiDx/0Ei/0eGrkMXqbrTqc1fGwIZN5JbLvNMw/TOCLcQ7AlMY3PkzKnwT3ZpFv9p+IYwDYxUmzpkNuoTerJk82MJ4o59in2LkUGcjhg9iCOUl0XWC7rsc7wE6U9HWREDA99oIuMJqowcQCMk1kBvTrp8gAluf1CAj4THkYbSKRXR7GKz6BXI+6gKuJZEDKywowiyoJc8b36oe1ipDupvdShCznetQHDFXE2QPD6ul7Chz4xqQOPdDMrV3kHbD6f/iMxKwJfOsic2BRixTvnOsYQF1XP4Dde5ZKSJ80dWwXCaFgyj/aAokukgHjWsS5QOA2LSRmFQGw6VS1GreK6O3AlWdpDU8X+QAu/GjOB3Cs/FzdswXwyb+33tJz5eO2i9yB6aMn4Sj7ZWsVNJkCt6ZGQhMw3fx90khuVoNRjVXtjk+Wq1aR01QkrbOm2cFJiS2BhSOK9WbR+HmABWldqwvOoUSiVGlGughPwcrkgHZyabwWgcfXAjB9JkTYnWxHVFnSTXmDIGB3k3y6kxaRXrlwUEQvTALoUM6yCCtswPp6eh+VRKiZeXohDqHQPyVbyKhV4U2hsOXvFH2kk4ISrKtnyGSicfVf69uQod7vQuFOHWgHCe2uPfKlWMa0dyF5ChFRN7iUl3n0YH+Y1c3k5O1sE5yyvyV9yHD/7NLfgCP3y1/ilaUbUwNDfAAAAABJRU5ErkJggg=="
+					alt="undefined logo"><span id="brandText">Content and Experience Cloud</span></a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="banner">
+		<div class="brand">
+			<div id="title" class="text-ellip"><a href="../delivery.html">Content SDK - Delivery Client </a>- getItem
+			</div>
+		</div>
+	</div>
+
+	<div class="apicode">
+		<textarea rows="7" readonly>
+			var contentId = 'CORE0822912B2FE4404F841CFEF4A43C9828';
+			contentClient.getItem({
+				'id': contentId
+			}).then(function (result) {
+				// process result
+			});
+		</textarea>
+	</div>
+
+	<div id="contentItem"></div>
+
+	<script type="text/javascript">
+		function dateToMDY(date) {
+			var dateObj = new Date(date);
+			var options = {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric'
+			};
+			var formattedDate = dateObj.toLocaleDateString('en-US', options);
+			return formattedDate;
+		};
+
+		// Helper function to parse markdown text.
+		function parseMarkdown(mdText, Marked) {
+			if (mdText && /^<!---mde-->\n\r/i.test(mdText)) {
+				mdText = mdText.replace("<!---mde-->\n\r", "");
+				mdText = Marked(mdText);
+			}
+
+			return mdText;
+		}
+
+		/* global  console */
+		require(['../sdk/content.min', '../libs/mustache.min', '../libs/marked.min'], function (contentSDK, Mustache,
+			Marked) {
+			// create the content client
+			var contentClient = contentSDK.createDeliveryClient({
+				'contentServer': 'http://localhost:7070',
+				'contentVersion': 'v1.1'
+			});
+
+
+			// get content id from url
+			var params = (new URL(document.location)).searchParams;
+			var contentId = params && params.get('id');
+
+			// retrieve the item
+			contentClient.getItem({
+				'id': contentId
+			}).then(function (result) {
+				if (result && result.fields) {
+					var item = result;
+					var data = item.fields;
+
+					// create the rendition URL
+					if (data['starter-blog-post_header_image']) {
+						data['starter-blog-post_header_image']['url'] = contentClient.getRenditionURL({
+							'id': data['starter-blog-post_header_image'].id
+						});
+					}
+
+					// expand any macros
+					data['starter-blog-post_content'] = contentClient.expandMacros(data[
+						'starter-blog-post_content']);
+
+					// get reference item - author
+					var authorId = data['starter-blog-post_author'] && data['starter-blog-post_author']['id'];
+					var authorPromise = contentClient.getItem({
+						id: authorId
+					});
+					authorPromise.then(function (author) {
+						var authorName = author && author.fields && author.fields[
+							'starter-blog-author_name'];
+						data['starter-blog-post_author']['name'] = authorName;
+						data['starter-blog-post_author']['bio'] = parseMarkdown(author && author.fields && author
+							.fields['starter-blog-author_bio'], Marked);
+						var authorAvatar = author && author.fields && author.fields[
+							'starter-blog-author_avatar'];
+						if (authorAvatar) {
+							// create the rendition URL
+							data['starter-blog-post_author']['avatarUrl'] = contentClient
+								.getRenditionURL({
+									'id': authorAvatar.id
+								});
+						}
+
+						var createdOn = dateToMDY(item.updatedDate.value);
+						data['metadata'] = authorName ? 'Posted by ' + authorName + ' on ' +
+							createdOn : 'Posted on ' + createdOn;
+
+						// get the Mustache template from the HTML
+						var template = $('#contentTemplate').html();
+
+						// generate the HTML passing in the retrieved content item object
+						var expandedHTML = Mustache.render(template, item);
+
+						// insert the HTML into the page
+						$('#contentItem').html(expandedHTML);
+					});
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

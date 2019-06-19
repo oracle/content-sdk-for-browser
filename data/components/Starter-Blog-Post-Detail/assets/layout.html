@@ -1,0 +1,38 @@
+<!--
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+-->
+<div class="contentItem">
+	{{#fields}}
+	<div class="Starter-Blog-Post">
+		{{#starter-blog-post_header_image}}
+		<div class="post-header" style="background-image: url('{{url}}')">
+			<div class="overlay"></div>
+		{{/starter-blog-post_header_image}}
+			<div class="row">
+			<div class="col">
+			<div class="post-heading">
+				<h1>{{starter-blog-post_title}}</h1>
+				<h2>{{starter-blog-post_summary}}</h2>
+				<span class="metadata">{{metadata}}</span>
+			</div>
+			</div>
+			</div>
+		{{#starter-blog-post_header_image}}
+		</div>
+		{{/starter-blog-post_header_image}}
+		<div class="post-body">
+			<div class="post-content">{{{starter-blog-post_content}}}</div>
+			{{#starter-blog-post_author}}
+			<div class="post-author">
+				{{#avatarUrl}}
+					<img src="{{avatarUrl}}"/>
+				{{/avatarUrl}}
+				<div>{{name}}</div>
+				<div>{{{bio}}}</div>
+			</div>
+			{{/starter-blog-post_author}}
+		</div>
+	</div>
+	{{/fields}}
+</div>

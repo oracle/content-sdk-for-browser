@@ -1,0 +1,79 @@
+{
+	"id": "A57E2A9B57F34D619B6B78730A8A2B36",
+	"name": "Starter-Blog-Author",
+	"description": "",
+	"createdby": "swebcli.SitesAdmin1.admin",
+	"createddate": {
+		"value": "2018-06-14T19:31:34.121Z",
+		"timezone": "UTC"
+	},
+	"updatedby": "swebcli.SitesAdmin1.admin",
+	"updateddate": {
+		"value": "2018-06-14T19:31:34.121Z",
+		"timezone": "UTC"
+	},
+	"fields": [{
+		"id": "894261A8035A4573AF50EA451CE9DEBB",
+		"name": "starter-blog-author_name",
+		"description": "Name",
+		"datatype": "text",
+		"required": true,
+		"valuecount": "single",
+		"properties": {},
+		"settings": {
+			"caas": {
+				"editor": {
+					"name": "textbox",
+					"options": {}
+				},
+				"customValidators": []
+			}
+		}
+	}, {
+		"id": "C7E7BF3FB3B749499A692398F35BF5AE",
+		"name": "starter-blog-author_avatar",
+		"description": "Avatar",
+		"datatype": "reference",
+		"required": true,
+		"valuecount": "single",
+		"properties": {},
+		"settings": {
+			"caas": {
+				"editor": {
+					"name": "mediapicker",
+					"options": {
+						"mediaTypes": ["images"]
+					}
+				},
+				"customValidators": []
+			}
+		},
+		"referenceType": {
+			"type": "DigitalAsset"
+		}
+	}, {
+		"id": "8BCD4C35FA9F49FD96863626E8A6F50D",
+		"name": "starter-blog-author_bio",
+		"description": "Bio",
+		"datatype": "largetext",
+		"required": true,
+		"valuecount": "single",
+		"properties": {},
+		"settings": {
+			"caas": {
+				"editor": {
+					"name": "markdown-editor",
+					"options": {}
+				},
+				"customValidators": []
+			}
+		}
+	}],
+	"properties": null,
+	"links": null,
+	"externalFile": {
+		"folderId": "FC0B2BA3C22F11B798328BA95A6D6A080EBEE58D0468",
+		"fileId": "D5484A2DDB1270C0A7B82FDD04377D50213AD588AD1E",
+		"version": "1"
+	}
+}
