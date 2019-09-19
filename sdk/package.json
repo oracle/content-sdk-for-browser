@@ -1,0 +1,7 @@
+{
+	"name": "contentsdk",
+	"version": "1.1.0",
+	"description": "Oracle Content Cloud Service JavaScript SDK",
+	"main": "content.min.js",
+	"license": "UPL-1.0"
+}

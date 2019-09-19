@@ -1,6 +1,6 @@
 {
 	"name": "browser-content-sdk",
-	"version": "19.2.1",
+	"version": "19.3.3",
 	"description": "Content and Experience Cloud Content SDK",
 	"main": "index.js",
 	"scripts": {
@@ -20,6 +20,7 @@
 	},
 	"license": "ISC",
 	"dependencies": {
+		"contentsdk": "file:sdk",
 		"cors": "2.8.4",
 		"express": "4.16.3",
 		"fs-extra": "6.0.1",

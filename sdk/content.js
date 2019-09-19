@@ -1,6 +1,18 @@
 /**
- * Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
- * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+ * Confidential and Proprietary for Oracle Corporation
+ *
+ * This computer program contains valuable, confidential, and
+ * proprietary information. Disclosure, use, or reproduction
+ * without the written authorization of Oracle is prohibited.
+ * This unpublished work by Oracle is protected by the laws
+ * of the United States and other countries. If publication
+ * of this computer program should occur, the following notice
+ * shall apply:
+ *
+ * Copyright (c) 2017 Oracle Corp.
+ * All rights reserved.
+ *
+ * $Id: content.js 167153 2019-01-25 21:29:15Z muralik $
  */
 /* global JSON, console, define, module, exports, require, requirejs, Promise */
 (function defineContentSDK(scope, factory) {
@@ -853,7 +865,8 @@
 			if (validContentVersion === 'v1') {
 				// only support v1.1 now, so create a v1.1 API and set the requestd content version to v1
 				// we will coerce the data on fetch to be in the v1 format
-				if (window.localStorage && window.localStorage['scs.component.content.v1removal.enable'] === 'true') {
+				//if (window.localStorage && window.localStorage['scs.component.content.v1removal.enable'] === 'true') {
+				if (true) {
 					// ToDo: wait for deprecation and fix up tests that are expecting 'v1' in the URL before making this change
 					return new _ContentAPI_v1_1Impl('v1');
 				} else {
@@ -874,7 +887,7 @@
 	 * <ul>
 	 * <li>Read the published content items</li>
 	 * <li>Render published content using named content layouts</li>
-	 * </ul
+	 * </ul>
 	 * @constructor
 	 * @alias ContentDeliveryClient
 	 * @param {object} args - A JavaScript object containing the parameters to create the content delivery client instance.
@@ -910,6 +923,9 @@
 			'contentVersion': this.restAPI.requestedContentVersion || this.restAPI.contentVersion
 		};
 
+		// store if running in compiler
+		this.isCompiler = args.isCompiler;
+
 		// set the authorization value
 		this.info.authorization = args.authorization;
 
@@ -926,6 +942,7 @@
 			queryItems: _utils.bind(this.queryItems, this),
 			getRenditionURL: _utils.bind(this.getRenditionURL, this),
 			getLayoutInfo: _utils.bind(this.getLayoutInfo, this),
+			loadContentLayout: _utils.bind(this.loadContentLayout, this),
 			renderItem: _utils.bind(this.renderItem, this),
 			expandMacros: _utils.bind(this.expandMacros, this)
 		};
@@ -1252,7 +1269,12 @@
 			guid = args.id || args.ID || args.itemGUID,
 			restCallArgs = self.resolveRESTArgs('GET', args);
 
-		return self.restAPI.getRenditionURL(guid, args.type, restCallArgs);
+		if (this.isCompiler) {
+			// encode into a macro and let the compiler expand
+			return '[!--$SCS_DIGITAL_ASSET--]' + guid + '[/!--$SCS_DIGITAL_ASSET--]';
+		} else {
+			return self.restAPI.getRenditionURL(guid, args.type, restCallArgs);
+		}
 	};
 
 
@@ -1326,6 +1348,49 @@
 				reject('missing parameters in call to getLayoutInfo: ' + JSON.stringify(args));
 			}
 		});
+	};
+
+	/**
+	 * Require in the requested content layout 
+	 * <b>Note:</b> This method isn't supported if the Content Delivery SDK is used in NodeJS.
+	 * @param {object} args - A JavaScript object containing the "renderItem" parameters.
+	 * @param {string} args.layout - Name of the layout to use to render the component.
+	 * @returns {Promise} JavaScript Promise object that is resolved when the layout JavaScript is loaded 
+	 */
+	ContentDeliveryClientImpl.prototype.loadContentLayout = function (params) {
+		var self = this,
+			args = params || {},
+			isSystemLayout = ['system-default-layout', 'system-tile-layout'].indexOf(args.layout) > -1,
+			layoutType,
+			layoutFactory,
+			loadItemPromise = new Promise(function (resolve, reject) {
+				// validate required parameters passed
+				if (args.layout) {
+					// get the layout type and path to the content layout factory .js file
+					if (isSystemLayout) {
+						layoutType = 'system';
+						layoutFactory = args.layout;
+					} else {
+						layoutType = self.getLayoutType(args.layoutType);
+						layoutFactory = args.layout + '/assets/render';
+					}
+
+					// construct the require path to the content layout factory .js file
+					var requireLayout = _requireConfig.getContentLayoutRequirePath(self.info) + layoutType + '/' + layoutFactory;
+					_logger.debug('ContentClient.renderItem: require path: ' + requireLayout);
+
+					require([requireLayout], function (ContentLayout) {
+						resolve(ContentLayout);
+					});
+				} else {
+					_logger.debug('ContentClient.renderItem: missing required parameters');
+
+					// invalid parmaters
+					reject('missing parameters in call to renderLayout: ' + JSON.stringify(args));
+				}
+			});
+
+		return loadItemPromise;
 	};
 
 	/**
@@ -1455,8 +1520,8 @@
 
 				if (digitalAssetIDStr.indexOf(',')) {
 					idStrParts = digitalAssetIDStr.split(',');
-        			assetId = idStrParts[0];
-        			isDownload = (idStrParts[1] === "true");
+					assetId = idStrParts[0];
+					isDownload = (idStrParts[1] === "true");
 				}
 
 				return this.getRenditionURL({
@@ -1480,10 +1545,45 @@
 			}, this)
 		}];
 
-		// expand each of the supported macros
-		macros.forEach(function (macroEntry) {
-			afterValue = afterValue.replace(macroEntry.macro, macroEntry.value);
-		});
+		// if it's a compiler, remove macros that compiler will expand
+		if (this.isCompiler) {
+			// currently compiler can handle all macros
+			macros = [];
+		}
+
+		var expandString = function (stringValue) {
+			var expandedString = stringValue;
+			// expand each of the supported macros
+			macros.forEach(function (macroEntry) {
+				expandedString = expandedString.replace(macroEntry.macro, macroEntry.value);
+			});
+			return expandedString;
+		};
+
+		var expandField = function (obj) {
+			var expandedValue = obj;
+			if (typeof obj === 'string') {
+				expandedValue = expandString(obj);
+			} else if (obj && typeof obj === 'object') {
+				// traverse the object
+				if (Array.isArray(obj)) {
+					// expand all entries in the array
+					expandedValue = obj.map(function (entry) {
+						return expandField(entry);
+					});
+				} else {
+					// expand all properties of the object
+					expandedValue = {}; 
+					Object.keys(obj).forEach(function (key) {
+						expandedValue[key] = expandField(obj[key]);
+					});
+				}
+			} 
+
+			return expandedValue;
+		}; 
+		afterValue = expandField(afterValue);
+
 
 		_logger.log('expandMacros: afterValue: ' + afterValue);
 
@@ -1540,6 +1640,9 @@
 			'contentVersion': this.restAPI.requestedContentVersion || this.restAPI.contentVersion
 		};
 
+		// store if running in compiler
+		this.isCompiler = args.isCompiler;
+
 		// set the authorization value 
 		this.info.authorization = args.authorization;
 
@@ -1556,6 +1659,7 @@
 			queryItems: _utils.bind(this.queryItems, this),
 			getRenditionURL: _utils.bind(this.getRenditionURL, this),
 			getLayoutInfo: _utils.bind(this.getLayoutInfo, this),
+			loadContentLayout: _utils.bind(this.loadContentLayout, this),
 			renderItem: _utils.bind(this.renderItem, this),
 			expandMacros: _utils.bind(this.expandMacros, this),
 			getTypes: _utils.bind(this.getTypes, this),
